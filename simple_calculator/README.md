@@ -1,19 +1,16 @@
 # SimpleCalculator
+Create a simple tip calculator. The program should prompt for a bill amount and a tip rate. The program must compute the tip and then display both the tip and the total amount of the bill.
 
-**TODO: Add description**
+## Output
+What is the bill? $200
+What is the tip percentage? 15
+The tip is $30.00
+The total is $230.00
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+1. Open the app.ex with mix
+```iex -S mix```
 
-  1. Add simple_calculator to your list of dependencies in `mix.exs`:
-
-        def deps do
-          [{:simple_calculator, "~> 0.0.1"}]
-        end
-
-  2. Ensure simple_calculator is started before your application:
-
-        def application do
-          [applications: [:simple_calculator]]
-        end
+2. Run the tests
+```mix test```
