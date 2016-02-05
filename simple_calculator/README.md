@@ -7,6 +7,12 @@ What is the tip percentage? 15
 The tip is $30.00
 The total is $230.00
 
+## Constraints
+The tip should be greater than 1
+Round fractions and cents up
+Only accept numbers as tip and bill total
+Don't allow negative numbers
+
 ## Installation
 
 1. Open the app.ex with mix
