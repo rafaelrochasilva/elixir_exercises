@@ -51,14 +51,11 @@ defmodule SimpleCalculator.Prompt do
   defp bill_input do
     bill_input = IO.gets "What is the bill?\n$"
 
-    value = PromptInputValidator.check(bill_input)
+    value = InputValidator.check(bill_input)
     case value do
       :error -> bill_input
       _ -> value
     end
-
-    bill_input
-    |> PromptInputValidator.check
   end
 
   defp menu_bar do

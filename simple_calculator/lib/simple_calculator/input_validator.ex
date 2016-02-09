@@ -1,4 +1,4 @@
-defmodule PromptInputValidator do
+defmodule InputValidator do
   def check(value) do
     value
     |> Float.parse
