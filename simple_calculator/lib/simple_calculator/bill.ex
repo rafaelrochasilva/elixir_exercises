@@ -1,6 +1,7 @@
 defmodule SimpleCalculator.Bill do
   def total(tip_percentage, bill_total) do
     tip(tip_percentage, bill_total) + bill_total
+    |> Float.ceil(2)
   end
 
   def tip(tip_percentage, bill_total) do
