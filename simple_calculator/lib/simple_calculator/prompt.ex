@@ -15,12 +15,12 @@ defmodule SimpleCalculator.Prompt do
     IO.puts "Main Menu:"
     IO.puts "1. Generate bill"
     IO.puts "2. Quit"
-    option = IO.gets "Choose an option:\n"
-    select_option(option)
+    select_option
   end
 
-  defp select_option(option) do
+  defp select_option do
     menu_bar
+    option = IO.gets "Choose an option:\n"
     case option do
       "1\n" -> bill_menu()
       "2\n" -> quit()
@@ -31,7 +31,6 @@ defmodule SimpleCalculator.Prompt do
   defp quit do
     menu_bar
     IO.puts "Good bye, have a nice day!"
-    menu_bar
   end
 
   defp invalid_option do
@@ -40,8 +39,26 @@ defmodule SimpleCalculator.Prompt do
   end
 
   defp bill_menu do
-    bill = IO.gets "What is the bill?\n$"
-    IO.puts "The total is $" <> bill
+    bill = bill_input
+    # tip_percentage = IO.gets "What is the tip percentage?\n%"
+    total = SimpleCalculator.Bill.total(10, bill)
+    tip = SimpleCalculator.Bill.tip(10, bill)
+    IO.puts "The tip is $#{tip}"
+    IO.puts "The total is $#{total}"
+    main_menu
+  end
+
+  defp bill_input do
+    bill_input = IO.gets "What is the bill?\n$"
+
+    value = PromptInputValidator.check(bill_input)
+    case value do
+      :error -> bill_input
+      _ -> value
+    end
+
+    bill_input
+    |> PromptInputValidator.check
   end
 
   defp menu_bar do
