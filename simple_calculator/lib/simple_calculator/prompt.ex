@@ -42,8 +42,8 @@ defmodule SimpleCalculator.Prompt do
     bill = input_message("What is the bill?\n$")
     tip_percentage = input_message("What is the tip percentage?\n$")
 
-    total = SimpleCalculator.Bill.total(tip_percentage, bill)
-    tip = SimpleCalculator.Bill.tip(tip_percentage, bill)
+    total = Bill.total(tip_percentage, bill)
+    tip = Bill.tip(tip_percentage, bill)
 
     IO.puts "The tip is $#{tip}"
     IO.puts "The total is $#{total}"
