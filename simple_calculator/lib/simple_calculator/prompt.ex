@@ -39,23 +39,26 @@ defmodule SimpleCalculator.Prompt do
   end
 
   defp bill_menu do
-    bill = bill_input
-    # tip_percentage = IO.gets "What is the tip percentage?\n%"
-    total = SimpleCalculator.Bill.total(10, bill)
-    tip = SimpleCalculator.Bill.tip(10, bill)
+    bill = input_message("What is the bill?\n$")
+    tip_percentage = input_message("What is the tip percentage?\n$")
+
+    total = SimpleCalculator.Bill.total(tip_percentage, bill)
+    tip = SimpleCalculator.Bill.tip(tip_percentage, bill)
+
     IO.puts "The tip is $#{tip}"
     IO.puts "The total is $#{total}"
+
     main_menu
   end
 
-  defp bill_input do
-    bill_input = IO.gets "What is the bill?\n$"
+  defp input_message(message) do
+    input = IO.gets(message)
 
-    value = InputValidator.check(bill_input)
-    case value do
-      :error -> bill_input
-      _ -> value
-    end
+    input
+    |> Float.parse
+    |> elem(0)
+    |> BillValidator.validates_numerically
+    |> BillValidator.validates_type
   end
 
   defp menu_bar do
