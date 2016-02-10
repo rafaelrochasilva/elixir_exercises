@@ -1,4 +1,4 @@
-defmodule BillValidator do
+defmodule SimpleCalculator.BillValidator do
   def validates_type(value) do
     case is_number(value) do
       false -> "Only numbers are allowed"
