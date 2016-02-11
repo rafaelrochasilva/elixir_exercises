@@ -54,11 +54,19 @@ defmodule SimpleCalculator.Prompt do
   defp input_message(message) do
     input = IO.gets(message)
 
-    input
-    |> Float.parse
-    |> elem(0)
-    |> BillValidator.validates_numerically
-    |> BillValidator.validates_type
+    number = case BillValidator.validates_type(input) do
+      {:error, error_msg} ->
+        IO.puts error_msg
+        input_message(message)
+      {:ok, value} -> value
+    end
+
+    case BillValidator.validates_numerically(number) do
+      {:error, error_msg} ->
+        IO.puts error_msg
+        input_message(message)
+      {:ok, value} -> value
+    end
   end
 
   defp menu_bar do
