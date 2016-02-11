@@ -1,4 +1,7 @@
 defmodule SimpleCalculator.Prompt do
+  alias SimpleCalculator.BillValidator, as: BillValidator
+  alias SimpleCalculator.Bill, as: Bill
+
   def init do
     welcome_message
     main_menu
