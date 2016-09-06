@@ -11,7 +11,7 @@ defmodule SimpleCalculator.Prompt do
     """
     ------------------------------------------------------------------
     Hi, welcome to Simple Calculator.
-    We are going to help you to calculate the tips for a given bill :)
+    We are going to help you to calculate the tips for a given bill :)\n
     """
       |> IO.puts
   end
@@ -21,21 +21,27 @@ defmodule SimpleCalculator.Prompt do
     ------------------------------------------------------------------
     Main Menu:
     1. Generate bill
-    2. Quit:
+    2. Quit:\n
     """
       |> IO.puts
 
-    select_option
+    display_options
   end
 
-  defp select_option do
-    option = "Choose an option:\n" |> IO.gets
-    case option do
-      "1\n" -> bill_menu()
-      "2\n" -> quit()
-       _  -> invalid_option()
-    end
+  defp display_options do
+    """
+    ------------------------------------------------------------------
+    Choose an option:\n
+    """
+      |> IO.gets
+      |> select_option
   end
+
+  defp select_option("1\n"), do: bill_menu
+
+  defp select_option("2\n"), do: quit
+
+  defp select_option(_), do: invalid_option
 
   defp quit do
     """
