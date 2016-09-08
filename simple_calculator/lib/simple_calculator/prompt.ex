@@ -1,10 +1,10 @@
 defmodule SimpleCalculator.Prompt do
   def init do
-    welcome
+    display_welcome_message
     main_menu
   end
 
-  defp welcome do
+  defp display_welcome_message do
     """
     --------------------------------------
     Hi, welcome to Simple Calculator.
@@ -17,17 +17,9 @@ defmodule SimpleCalculator.Prompt do
   defp main_menu do
     """
     --------------------------------------
-    Main Menu:
-    1. The bill, please!
+    Simple Calculator - Main Menu:
+    1. Ask for the bill
     2. Quit:
-    """
-    |> IO.puts
-
-    options_menu
-  end
-
-  defp options_menu do
-    """
     --------------------------------------
     Choose an option:
     """
@@ -35,13 +27,13 @@ defmodule SimpleCalculator.Prompt do
     |> select_option
   end
 
-  defp select_option("1\n"), do: bill_menu
+  defp select_option("1\n"), do: calculate_bill
 
-  defp select_option("2\n"), do: quit
+  defp select_option("2\n"), do: quit_app
 
-  defp select_option(_), do: invalid_option
+  defp select_option(_), do: invalid_option_message
 
-  defp quit do
+  defp quit_app do
     """
     --------------------------------------
     Good bye, have a nice day!
@@ -49,44 +41,46 @@ defmodule SimpleCalculator.Prompt do
     |> IO.puts
   end
 
-  defp invalid_option do
+  defp invalid_option_message do
     IO.puts "**Please select only valid options"
     main_menu
   end
 
-  defp bill_menu do
-    bill = "How much is the bill?\n$" |> ask
-    tip_percentage = "What is the tip percentage?\n$" |> ask
+  defp calculate_bill do
+    bill = get_user_input_with("Insert the bill ammont?\n$")
+    tip_percentage = get_user_input_with("What is the tip percentage?\n$")
 
     SimpleCalculator.Bill.resume(tip_percentage, bill)
     |> bill_resume_message
 
-    options_menu
+    main_menu
   end
 
   defp bill_resume_message({total, tip}) do
     """
-    The total is $#{total}
-    The tip is $#{tip}
+    *************************************
+    * The total is $#{total}
+    * The tip is $#{tip}
+    *************************************
     """
     |> IO.puts
   end
 
-  defp ask(message) do
+  defp get_user_input_with(message) do
     input = IO.gets(message)
 
     number = case SimpleCalculator.BillValidator.validates_type(input) do
       {:error, error_msg} ->
         IO.puts error_msg
-        ask(message)
-        {:ok, value} -> value
+        get_user_input_with(message)
+      {:ok, value} -> value
     end
 
     case SimpleCalculator.BillValidator.validates_numerically(number) do
       {:error, error_msg} ->
         IO.puts error_msg
-        ask(message)
-        {:ok, value} -> value
+        get_user_input_with(message)
+      {:ok, value} -> value
     end
   end
 end
